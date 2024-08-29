@@ -1,3 +1,0 @@
-@echo off
-echo Optimizing battery usage...
-.\adb\adb.exe shell dumpsys deviceidle force-idle

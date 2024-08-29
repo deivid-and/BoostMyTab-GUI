@@ -16,8 +16,12 @@
 
     <!-- Recommendation Section -->
     <div class="recommendation">
-        <p>For maximum performance, it is recommended to <strong>disable</strong> all unnecessary processes and optimizations. You can always re-enable them if needed.</p>
+        <p>For maximum performance, it is recommended to <strong>disable</strong> all unnecessary processes and
+            optimizations. You can always re-enable them if needed.</p>
+        <p>If you need help setting up, click the <button id="helpButton"
+                class="help-button"><strong>Help</strong></button> button!</p>
     </div>
+
 
     <div class="main-container">
         <div class="container control-panel">
@@ -63,9 +67,9 @@
                         Disable Keyboard
                         <span class="tooltip">Disables the virtual keyboard if not needed.</span>
                     </button>
-                    <button data-action="/enable_keyboard" class="enable-btn">
+                    <button disabled class="enable-btn">
                         Enable Keyboard
-                        <span class="tooltip">Re-enables the virtual keyboard.</span>
+                        <span class="tooltip">RESTART the tablet to re-enable the keyboard.</span>
                     </button>
                 </div>
             </fieldset>
@@ -83,13 +87,15 @@
                         Enable Power Saving
                         <span class="tooltip">Re-enables power saving mode.</span>
                     </button>
-                    <button data-action="/disable_battery_optimization" class="disable-btn">
-                        Disable Battery Optimization
-                        <span class="tooltip">Disables battery optimization to prevent app throttling.</span>
+                    <h3>Screen Brightness</h3>
+                    <button data-action="/set_min_brightness" class="disable-btn">
+                        Set Brightness to Minimum
+                        <span class="tooltip">Sets the screen brightness to the minimum level to save battery.
+                            Recommended when controlling the tablet via PC.</span>
                     </button>
-                    <button data-action="/enable_battery_optimization" class="enable-btn">
-                        Enable Battery Optimization
-                        <span class="tooltip">Re-enables battery optimization.</span>
+                    <button data-action="/set_max_brightness" class="enable-btn">
+                        Set Brightness to Maximum
+                        <span class="tooltip">Sets the screen brightness to the maximum level.</span>
                     </button>
                 </div>
                 <div class="button-group">
@@ -124,10 +130,6 @@
                         Unlimit Background Processes
                         <span class="tooltip">Allows unlimited background processes.</span>
                     </button>
-                    <button data-action="/disable_background_data" class="disable-btn">
-                        Disable Background Data
-                        <span class="tooltip">Disables background data to save bandwidth.</span>
-                    </button>
                 </div>
                 <div class="button-group">
                     <h3>Network Optimization</h3>
@@ -145,27 +147,33 @@
             <!-- System Management Section -->
             <fieldset>
                 <legend>System Management</legend>
-                <div class="button-group">
-                    <h3>Cache Management</h3>
-                    <button data-action="/clear_cache">
-                        Clear Cache
-                        <span class="tooltip">Clears the cache to free up storage and improve speed.</span>
-                    </button>
-                </div>
+
                 <div class="button-group">
                     <h3>Recovery Mode</h3>
-                    <button data-action="/enter_recovery_mode">
+                    <button data-action="/enter_recovery_mode" class="system-btn">
                         Enter Recovery Mode
-                        <span class="tooltip">Reboots the device into recovery mode.</span>
+                        <span class="tooltip">Reboots the device into recovery mode.⚠️ Not recommended for general users
+                            due to its advanced nature.</span>
                     </button>
                 </div>
+
                 <div class="button-group">
                     <h3>Device Management</h3>
-                    <button data-action="/list_devices">List Connected Devices
+                    <button data-action="/list_devices" class="system-btn">
+                        List Connected Devices
                         <span class="tooltip">Displays a list of connected devices via ADB.</span>
                     </button>
                 </div>
+
+                <div class="button-group">
+                    <h3>Tablet Management</h3>
+                    <button data-action="/restart_tab" class="system-btn">
+                        Restart Tablet
+                        <span class="tooltip">Repowers the tablet.</span>
+                    </button>
+                </div>
             </fieldset>
+
         </div>
 
         <!-- Connected Devices Section -->
@@ -179,9 +187,8 @@
                 <button data-action="/start_scrcpy">Connect Tab to PC
                     <span class="tooltip">Start scrcpy to mirror and control the tablet from your PC.</span>
                 </button>
-            </div>            
+            </div>
         </div>
-
         <!-- Output Messages Section -->
         <div class="output-container">
             <div id="output" class="output"></div>
@@ -191,5 +198,36 @@
         </div>
     </div>
 </body>
+
+<div id="helpModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Getting Started with BoostMyTab</h2>
+        <p>Follow these steps to connect your tablet and use BoostMyTab effectively:</p>
+        
+        <h3>Step 1: Enable Developer Options</h3>
+        <p>Navigate to <strong>Settings</strong> > <strong>About Tablet</strong> > <strong>Software Information</strong>.
+            Tap on <strong>Build Number</strong> seven times to unlock Developer Options.</p>
+        
+        <h3>Step 2: Enable USB Debugging</h3>
+        <p>In <strong>Settings</strong>, go to <strong>Developer Options</strong> and turn on <strong>USB Debugging</strong>.</p>
+        
+        <h3>Step 3: Connect Your Tablet to the PC</h3>
+        <p>Connect your tablet to your PC using a USB cable. When prompted on your tablet, authorize USB debugging by tapping <strong>Authorize</strong>.</p>
+        
+        <h3>Step 4: Launch BoostMyTab</h3>
+        <p>Once connected, start running optimization scripts using BoostMyTab. If you want to mirror and control your tablet from your PC, click on the <strong>Connect Tab to PC</strong> button.</p>
+        
+        <h3>Step 5: Troubleshooting Tips</h3>
+        <p>If you encounter any issues, ensure that:</p>
+        <ul>
+            <li>Your tablet is properly connected to the PC.</li>
+            <li>Developer Options are enabled.</li>
+            <li>USB Debugging is turned on and has been <strong>authorized</strong>.</li>
+            <li>All unnecessary background applications are closed for optimal performance.</li>
+        </ul>
+        <p>After verifying these settings, you should be ready to use BoostMyTab without issues.</p>
+    </div>
+</div>
 
 </html>

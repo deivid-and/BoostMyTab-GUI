@@ -27,8 +27,7 @@ body {
 
 h1 {
   color: #0056b3;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin: 15px 0;
   font-weight: 700;
   font-size: 2.3rem;
   text-align: center;
@@ -51,6 +50,21 @@ h1 {
 .recommendation p {
   font-size: 1rem;
   margin: 0;
+}
+
+.help-button {
+  background-color: #343a40;
+  color: #ffc107;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.help-button:hover {
+  background-color: #ffc107;
+  color: #343a40;
 }
 
 .main-container {
@@ -116,6 +130,16 @@ button {
   transition: background-color 0.3s ease, transform 0.1s ease;
   flex-basis: 48%;
   position: relative;
+}
+
+button[disabled] {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+button[disabled]:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
 }
 
 @media (min-width: 768px) {
@@ -220,7 +244,7 @@ button#clearMessages:hover {
   left: 50%;
   transform: translateX(-50%);
   visibility: hidden;
-  width: 180px;
+  width: 280px;
   background-color: #343a40;
   color: #ffffff;
   text-align: center;
@@ -272,9 +296,7 @@ body::-webkit-scrollbar-thumb {
   width: 30%;
   max-width: 280px;
   text-align: center;
-  margin-left: 15px;
-  margin-right: 15px;
-  margin-bottom: 20px;
+  margin: 15px 15px 20px 15px;
 }
 
 .connected-devices h2 {
@@ -320,4 +342,47 @@ body::-webkit-scrollbar-thumb {
 .device-status .status-text {
   font-size: 1.1rem;
   font-weight: 600;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  border-radius: 10px;
+}
+
+h2 {
+  color: #0056b3;
+}
+
+h3 {
+  color: #41a6e1;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }

@@ -1,10 +1,13 @@
 @echo off
-echo Clearing all app caches using 'pm trim-caches'...
+echo Cleaning memory and freeing up RAM...
 
-:: Clear all caches on the device
-.\adb\adb.exe shell pm trim-caches 100M
+:: Clearing app caches
+.\adb\adb.exe shell pm clear-all
+echo Cleared all app caches.
 
-:: Verify cache clearing
-.\adb\adb.exe shell df /data
+:: Flush the memory
+.\adb\adb.exe shell "sync; echo 3 > /proc/sys/vm/drop_caches"
+echo Flushed memory caches.
 
-echo All caches cleared.
+echo Memory cleaned up.
+pause

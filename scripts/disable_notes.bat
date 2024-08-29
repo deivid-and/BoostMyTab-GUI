@@ -1,3 +1,0 @@
-@echo off
-echo Disabling Samsung Notes...
-.\adb\adb.exe shell pm disable-user --user 0 com.samsung.android.app.notes
