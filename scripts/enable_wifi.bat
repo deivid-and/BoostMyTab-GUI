@@ -1,3 +1,0 @@
-@echo off
-echo Enabling Wi-Fi...
-adb shell svc wifi enable

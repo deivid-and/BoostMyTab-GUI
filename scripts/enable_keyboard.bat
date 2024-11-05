@@ -1,3 +1,0 @@
-echo Enabling virtual keyboard...
-adb shell ime set com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME
-

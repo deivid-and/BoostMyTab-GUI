@@ -2,3 +2,5 @@ Flask
 Flask-SocketIO
 psutil
 eventlet
+python-engineio
+python-socketio
