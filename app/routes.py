@@ -1,54 +1,62 @@
-import subprocess
+# app/routes.py
 import os
+import sys
+import subprocess
 import logging
-from flask import Blueprint, render_template, jsonify
+from flask import Blueprint, render_template, jsonify, current_app
 from flask_socketio import emit
-import psutil
 from . import socketio
 
 logging.basicConfig(level=logging.DEBUG)
 
 main = Blueprint('main', __name__)
 
-# Mapping of script categories and their corresponding folder paths
-SCRIPT_PATHS = {
-    "Manage_Unnecessary_Processes": "scripts/Manage_Unnecessary_Processes",
-    "Performance_Optimization": "scripts/Performance_Optimization",
-    "System_Management": "scripts/System_Management"
-}
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and PyInstaller """
+    base_path = getattr(sys, '_MEIPASS', os.path.abspath("."))
+    return os.path.join(base_path, relative_path)
 
 def run_script(script_name, category, async_run=False):
-    # Construct absolute path for the script
-    script_path = os.path.join(os.getcwd(), SCRIPT_PATHS[category], script_name)
+    script_dir = current_app.config['SCRIPT_PATHS'].get(category)
+    if not script_dir:
+        error_msg = f"Invalid script category: {category}"
+        logging.error(error_msg)
+        return {"status": "error", "message": error_msg}
+    
+    script_path = os.path.join(script_dir, script_name)
     
     if not os.path.exists(script_path):
         error_msg = f"Script not found: {script_path}"
         logging.error(error_msg)
         return {"status": "error", "message": error_msg}
-    
+
     try:
         logging.debug(f"Running script at path: {script_path}")
         
         env = os.environ.copy()
-        env['PATH'] = os.path.join(os.getcwd(), 'scripts', 'adb') + os.pathsep + env['PATH']
+        env['PATH'] = os.pathsep.join([
+            resource_path('scripts/adb'),
+            env.get('PATH', '')
+        ])
         
         if async_run:
-            # Run script asynchronously in a separate process
             subprocess.Popen(
                 script_path,
                 shell=True,
-                cwd=os.path.dirname(script_path),
+                cwd=script_dir,
                 env=env
             )
             success_message = f"Script {script_name} started successfully in the background."
             logging.debug(success_message)
             return {"status": "success", "message": success_message}
         else:
-            # Run script and wait for it to complete
             result = subprocess.run(
                 script_path,
-                capture_output=True, text=True, shell=True, check=True,
-                cwd=os.path.dirname(script_path),
+                capture_output=True,
+                text=True,
+                shell=True,
+                check=True,
+                cwd=script_dir,
                 timeout=120,
                 env=env
             )
@@ -72,6 +80,7 @@ def run_script(script_name, category, async_run=False):
         error_msg = f"Unexpected error: {str(e)}"
         logging.error(error_msg)
         return {"status": "error", "message": error_msg}
+
 
 @main.route('/')
 def index():
