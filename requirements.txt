@@ -1,6 +1,2 @@
-Flask
-Flask-SocketIO
+PyQt5
 psutil
-eventlet
-python-engineio
-python-socketio
