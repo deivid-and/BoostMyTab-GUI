@@ -2,20 +2,20 @@
 
 from PyInstaller.utils.hooks import collect_submodules
 
-pathex = ['C:\\Users\\Dale\\Efficiency\\BoostMyTab']
+pathex = ['BoostMyTab']
 hookspath = ['pyinstaller_hooks'] 
+hiddenimports = collect_submodules('PyQt5') + collect_submodules('qtwidgets')
 
 a = Analysis(
-    ['entry.py'],
+    ['.\gui\widgets\main.py'],
     pathex=pathex,
     binaries=[],
     datas=[
-        ('templates', 'templates'), 
-        ('static', 'static'), 
-        ('scripts', 'scripts'), 
-        ('scrcpy-win64-v2.6.1', 'scrcpy-win64-v2.6.1')
+        ('gui', 'gui'),
+        ('scripts', 'scripts'),
+        ('scrcpy-win64-v2.6.1', 'scrcpy-win64-v2.6.1'),
     ],
-    hiddenimports=collect_submodules('eventlet') + collect_submodules('engineio') + collect_submodules('socketio') + collect_submodules('flask_socketio'),
+    hiddenimports=hiddenimports,
     hookspath=hookspath,
     hooksconfig={},
     runtime_hooks=[],
@@ -23,7 +23,6 @@ a = Analysis(
     noarchive=False,
     optimize=1,
 )
-
 
 pyz = PYZ(a.pure)
 
@@ -37,13 +36,13 @@ exe = EXE(
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
-    upx=True,                
-    upx_exclude=[],          
-    runtime_tmpdir=None,     
-    console=True,            
+    upx=True, 
+    upx_exclude=[],
+    runtime_tmpdir=None,
+    console=False,
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,
-    codesign_identity=None,  
-    entitlements_file=None,  # Entitlements file for macOS, not used on Windows
+    codesign_identity=None,
+    entitlements_file=None,
 )

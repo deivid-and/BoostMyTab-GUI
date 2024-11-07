@@ -1,6 +1,7 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow
-from gui.widgets.main_window import MainWindow  # Assuming main_window.py is under widgets/
+import os
+from PyQt5.QtWidgets import QApplication
+from gui.widgets.main_window import MainWindow  
 
 def main():
     app = QApplication(sys.argv)
